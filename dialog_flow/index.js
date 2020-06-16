@@ -3,7 +3,6 @@ import {v4 as uuid} from 'uuid';
 
 export default function dialog (message)
 {
-    console.log(message)
     /**
      * Send a query to the dialogflow agent, and return the query result.
      * @param {string} projectId The project to be used

@@ -2,6 +2,7 @@
 import Discord from 'discord.js';
 const client = new Discord.Client();
 import dialog from "./dialog_flow/index.js";
+import axios from 'axios';
 import {} from 'dotenv/config.js';
 
 client.on('ready', () => {
@@ -9,10 +10,27 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  dialog(msg.content)
-    // msg.reply(dialog(msg.content))
-  if (msg.content === 'ping') {
-    msg.reply('pong');
+
+  // DISPLAY CURRENT ETHEREUM
+  if (msg.content === '!eth') {
+    axios.get('https://api.coinbase.com/v2/prices/ETH-EUR/spot')
+    .then(response => {
+      msg.reply('Le prix de l\'ethereum est de ' + Math.round(response.data.data.amount) + ' €');
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  // DISPLAY CURRENT BITCOIN
+  if (msg.content === '!btc') {
+    axios.get('https://api.coinbase.com/v2/prices/BTC-EUR/spot')
+    .then(response => {
+      msg.reply('Le prix du bitcoin est de ' + Math.round(response.data.data.amount) + ' €');
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 });
 
